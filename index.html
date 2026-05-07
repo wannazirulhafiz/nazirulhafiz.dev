@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nazirul Hafiz · Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:    #0d0d10;
+      --bg2:   #111116;
+      --bg3:   #18181f;
+      --cream: #e8e8f2;
+      --muted: #6b7280;
+      --dim:   #3f3f5a;
+      --accent:#8b5cf6;
+      --cyan:  #22d3ee;
+      --green: #22c55e;
+      --border:rgba(139,92,246,.15);
+      --mono:  'Geist Mono', monospace;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --display:'Fraunces', Georgia, serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--serif);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    /* ── STATUS BAR ── */
+    .statusbar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: .45rem 2.5rem;
+      display: flex; align-items: center; gap: 2rem;
+      overflow-x: auto;
+    }
+    .statusbar span {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--dim); white-space: nowrap;
+      letter-spacing: .05em;
+    }
+    .statusbar .live {
+      color: var(--green); font-weight: 500;
+      display: flex; align-items: center; gap: .35rem;
+    }
+    .statusbar .live::before {
+      content:''; width:5px; height:5px; border-radius:50%;
+      background:var(--green); animation:pulse 2s infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .statusbar .accent-val { color: var(--accent); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,14,12,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 58px;
+    }
+    .nav-brand {
+      display: flex; flex-direction: column;
+      text-decoration: none;
+    }
+    .nav-brand .brand-name {
+      font-family: var(--display); font-size: 1rem;
+      font-weight: 700; color: var(--cream); letter-spacing: -.01em;
+    }
+    .nav-brand .brand-sub {
+      font-family: var(--mono); font-size: .58rem;
+      color: var(--muted); letter-spacing: .06em;
+    }
+    .nav-links { display: flex; gap: .15rem; }
+    .nav-links a {
+      font-family: var(--mono); font-size: .7rem;
+      color: var(--muted); text-decoration: none;
+      padding: .35rem .8rem; border-radius: 4px;
+      letter-spacing: .05em; transition: color .2s, background .2s;
+    }
+    .nav-links a:hover { color: var(--cream); background: var(--bg3); }
+    .nav-avail {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--green); letter-spacing: .08em;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .nav-avail::before {
+      content:''; width:5px; height:5px; border-radius:50%;
+      background:var(--green); animation:pulse 2s infinite;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 5rem 2.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 340px; gap: 4rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .hero-left {}
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: .68rem;
+      color: var(--muted); letter-spacing: .1em;
+      margin-bottom: 2rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .hero-eyebrow::before { content:'§'; color:var(--dim); }
+    h1.display {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 300; line-height: 1.1;
+      letter-spacing: -.02em; color: var(--cream);
+      margin-bottom: 2.5rem;
+    }
+    h1.display em { font-style: italic; color: var(--accent); }
+    h1.display strong { font-weight: 700; }
+    .hero-body {
+      font-family: var(--serif); font-size: 1.05rem;
+      color: var(--muted); line-height: 1.8;
+      max-width: 480px; margin-bottom: 2rem;
+      font-weight: 300;
+    }
+    .hero-body strong { color: var(--cream); font-weight: 600; }
+    .hero-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+    .hero-links a {
+      font-family: var(--mono); font-size: .72rem;
+      letter-spacing: .06em; text-decoration: none;
+      transition: color .2s;
+    }
+    .hero-links .primary {
+      color: var(--accent); border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+    }
+    .hero-links .primary:hover { color: var(--cream); border-color: var(--cream); }
+    .hero-links .ghost { color: var(--muted); }
+    .hero-links .ghost:hover { color: var(--cream); }
+
+    /* HERO SIDEBAR */
+    .hero-right {
+      border-left: 1px solid var(--border);
+      padding-left: 2.5rem;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .sidebar-label {
+      font-family: var(--mono); font-size: .58rem;
+      color: var(--dim); letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: .75rem;
+      padding-bottom: .5rem; border-bottom: 1px solid var(--border);
+    }
+    .status-grid {
+      display: flex; flex-direction: column; gap: 0;
+      margin-bottom: 2rem;
+    }
+    .status-row {
+      display: flex; justify-content: space-between;
+      padding: .55rem 0;
+      border-bottom: 1px solid rgba(200,169,110,.06);
+      font-family: var(--mono); font-size: .68rem;
+    }
+    .status-row .sk { color: var(--dim); }
+    .status-row .sv { color: var(--cream); }
+    .status-row .sv.green { color: var(--green); }
+    .status-row .sv.accent { color: var(--accent); }
+    .quick-links { display: flex; flex-direction: column; gap: .5rem; margin-top: 1.5rem; }
+    .quick-link {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--muted); text-decoration: none;
+      letter-spacing: .04em;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .4rem 0;
+      border-bottom: 1px solid rgba(200,169,110,.06);
+      transition: color .2s;
+    }
+    .quick-link:hover { color: var(--accent); }
+    .quick-link .arrow { color: var(--dim); }
+
+    /* ── ROOMS ── */
+    .rooms-wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2.5rem; }
+    .room { margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border); }
+    .room:last-child { border-bottom: none; }
+    .room-header {
+      display: flex; align-items: baseline;
+      justify-content: space-between; margin-bottom: 2.5rem;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .room-id {
+      font-family: var(--mono); font-size: .62rem;
+      color: var(--dim); letter-spacing: .1em;
+      margin-bottom: .5rem;
+    }
+    .room-title {
+      font-family: var(--display); font-size: 1.5rem;
+      font-weight: 700; color: var(--cream);
+    }
+    .room-more {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--muted); text-decoration: none;
+      letter-spacing: .06em; transition: color .2s;
+    }
+    .room-more:hover { color: var(--accent); }
+
+    /* Service cards (grid) */
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+    .svc-card {
+      background: var(--bg); padding: 1.75rem;
+      transition: background .25s;
+      display: flex; flex-direction: column; gap: .75rem;
+    }
+    .svc-card:hover { background: var(--bg3); }
+    .svc-card-num {
+      font-family: var(--mono); font-size: .6rem;
+      color: var(--dim); letter-spacing: .1em;
+    }
+    .svc-card h3 {
+      font-family: var(--display); font-size: 1.1rem;
+      font-weight: 700; color: var(--cream); line-height: 1.3;
+    }
+    .svc-card p {
+      font-size: .85rem; color: var(--muted);
+      line-height: 1.7; font-weight: 300; flex: 1;
+    }
+    .svc-tools { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: auto; }
+    .svc-tool {
+      font-family: var(--mono); font-size: .6rem;
+      padding: .15rem .5rem; border: 1px solid var(--border);
+      border-radius: 2px; color: var(--dim);
+    }
+
+    /* Capabilities list */
+    .cap-list {}
+    .cap-item {
+      display: grid; grid-template-columns: 2rem 1fr auto;
+      gap: 1.5rem; align-items: center;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left .2s;
+    }
+    .cap-item:first-child { border-top: 1px solid var(--border); }
+    .cap-item:hover { padding-left: .75rem; }
+    .cap-n { font-family: var(--mono); font-size: .6rem; color: var(--dim); }
+    .cap-name {
+      font-family: var(--serif); font-size: 1rem;
+      font-weight: 600; color: var(--cream); transition: color .2s;
+    }
+    .cap-item:hover .cap-name { color: var(--accent); }
+    .cap-sub { font-size: .78rem; color: var(--muted); margin-top: .15rem; font-weight: 300; }
+    .cap-badge { display: none; }
+
+    /* Work list */
+    .work-list { display: flex; flex-direction: column; }
+    .work-item {
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .work-item:first-child { border-top: 1px solid var(--border); }
+    .work-meta-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; flex-wrap: wrap; gap: .5rem;
+      margin-bottom: .6rem;
+    }
+    .work-role {
+      font-family: var(--display); font-size: 1.15rem;
+      font-weight: 700; color: var(--cream);
+    }
+    .work-co {
+      font-family: var(--mono); font-size: .68rem;
+      color: var(--accent); letter-spacing: .04em; margin-top: .2rem;
+    }
+    .work-period {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--dim); white-space: nowrap;
+    }
+    .work-desc {
+      font-size: .9rem; color: var(--muted); line-height: 1.7;
+      font-weight: 300; max-width: 580px; margin: .6rem 0;
+    }
+    .work-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .chip {
+      font-family: var(--mono); font-size: .58rem;
+      padding: .15rem .5rem; border: 1px solid var(--border);
+      border-radius: 2px; color: var(--dim);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+      padding: 5rem 2.5rem;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    }
+    .contact-left h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; line-height: 1.15;
+      letter-spacing: -.02em; margin-bottom: 1.25rem;
+    }
+    .contact-left h2 em { font-style: italic; color: var(--accent); }
+    .contact-left p {
+      font-size: .92rem; color: var(--muted);
+      line-height: 1.8; font-weight: 300; margin-bottom: 2rem;
+    }
+    .contact-cta {
+      font-family: var(--mono); font-size: .7rem;
+      letter-spacing: .08em; color: var(--accent);
+      text-decoration: none; border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px; transition: color .2s, border-color .2s;
+    }
+    .contact-cta:hover { color: var(--cream); border-color: var(--cream); }
+    .contact-right { border-left: 1px solid var(--border); padding-left: 3rem; }
+    .soc-list { display: flex; flex-direction: column; }
+    .soc-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+      text-decoration: none; color: var(--cream);
+      transition: padding-left .2s;
+    }
+    .soc-item:first-child { border-top: 1px solid var(--border); }
+    .soc-item:hover { padding-left: .5rem; }
+    .soc-item:hover .soc-platform { color: var(--accent); }
+    .soc-platform {
+      font-family: var(--display); font-size: 1.05rem;
+      font-weight: 700; transition: color .2s;
+    }
+    .soc-handle {
+      font-family: var(--mono); font-size: .62rem;
+      color: var(--muted); margin-top: .15rem;
+    }
+    .soc-arrow { font-family: var(--mono); font-size: .75rem; color: var(--dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      max-width: 100%;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 2rem; flex-wrap: wrap;
+    }
+    .footer-col { }
+    .footer-label {
+      font-family: var(--mono); font-size: .58rem;
+      color: var(--dim); letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: .6rem;
+    }
+    .footer-col p {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--muted); line-height: 1.6; max-width: 320px;
+    }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+    .footer-links a {
+      font-family: var(--mono); font-size: .65rem;
+      color: var(--muted); text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      height: 1px; background: var(--border);
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    /* ── SCROLL OFFSET ── */
+    .room, #contact, #hero {
+      scroll-margin-top: 70px;
+    }
+
+    /* ── FADE ── */
+    .fade { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .fade.in { opacity: 1; transform: none; }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      #hero{grid-template-columns:1fr;} .hero-right{border-left:none;border-top:1px solid var(--border);padding:2rem 0 0;margin-top:2rem;}
+      .svc-grid{grid-template-columns:1fr 1fr;}
+      #contact{grid-template-columns:1fr;} .contact-right{border-left:none;border-top:1px solid var(--border);padding:2rem 0 0;}
+    }
+    @media(max-width:640px){
+      nav{padding:0 1.5rem;} .nav-links{display:none;}
+      .rooms-wrap{padding:3rem 1.5rem;}
+      #hero{padding:3rem 1.5rem 2.5rem;}
+      .svc-grid{grid-template-columns:1fr;}
+      .cap-item{grid-template-columns:1.5rem 1fr;}
+      .cap-badge{display:none;}
+      #contact{padding:3rem 1.5rem;}
+      footer .footer-inner{flex-direction:column;}
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <span class="brand-name">Nazirul Hafiz</span>
+    <span class="brand-sub">data analyst · the data room</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">services</a>
+    <a href="#capabilities">capabilities</a>
+    <a href="#vibe">vibe coding</a>
+    <a href="#work">work</a>
+    <a href="#contact">contact</a>
+  </div>
+  <span class="nav-avail">available</span>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow fade">nazirul hafiz · data analyst · 2026</div>
+    <h1 class="display fade d1">
+      The data comes in<br>
+      <em>raw and shapeless.</em><br>
+      <strong>I give it meaning.</strong>
+    </h1>
+    <p class="hero-body fade d2">
+      I work at the intersection of <strong>data analytics</strong> and <strong>social intelligence</strong>. Currently building social listening services at ANALITIKA —
+      turning noise into signal, dashboards into decisions.
+    </p>
+    <div class="hero-links fade d3">
+      <a href="#services" class="primary">what I can do →</a>
+      <a href="#contact" class="ghost">get in touch</a>
+    </div>
+  </div>
+  <div class="hero-right fade d2">
+    <div class="sidebar-label">current status</div>
+    <div class="status-grid">
+      <div class="status-row"><span class="sk">position</span><span class="sv">Data Analyst</span></div>
+      <div class="status-row"><span class="sk">employer</span><span class="sv">ANALITIKA</span></div>
+      <div class="status-row"><span class="sk">location</span><span class="sv">Cyberjaya · Remote</span></div>
+      <div class="status-row"><span class="sk">tenure</span><span class="sv">3 yrs+</span></div>
+      <div class="status-row"><span class="sk">availability</span><span class="sv green">open</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<div class="rooms-wrap">
+
+  <!-- SERVICES -->
+  <div id="services" class="room fade">
+    <div class="room-header">
+      <div>
+        <div class="room-id">room · 01</div>
+        <div class="room-title">What I do</div>
+      </div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <span class="svc-card-num">01</span>
+        <h3>Data Analytics & Reporting</h3>
+        <p>Turn raw datasets into clear dashboards. KPI tracking, executive reports, and visualisations that tell the right story to the right audience.</p>
+        <div class="svc-tools"><span class="svc-tool">Power BI</span><span class="svc-tool">SQL</span><span class="svc-tool">Python</span><span class="svc-tool">DAX</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-card-num">02</span>
+        <h3>Social Listening & Sentiment Analysis</h3>
+        <p>Extract public opinion from social platforms — sentiment, trends, and audience behaviour to drive smarter marketing strategies.</p>
+        <div class="svc-tools"><span class="svc-tool">Python</span><span class="svc-tool">Social APIs</span><span class="svc-tool">Power BI</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-card-num">03</span>
+        <h3>Cloud & DevOps Infrastructure</h3>
+        <p>Set up and automate cloud infrastructure — containerised deployments, CI/CD pipelines, DNS and security on Cloudflare.</p>
+        <div class="svc-tools"><span class="svc-tool">AWS</span><span class="svc-tool">Docker</span><span class="svc-tool">Terraform</span><span class="svc-tool">Ansible</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-card-num">04</span>
+        <h3>Training & Upskilling</h3>
+        <p>HRD Corp Accredited Trainer. I deliver hands-on data literacy and analytics training for teams and organisations.</p>
+        <div class="svc-tools"><span class="svc-tool">HRD Corp</span><span class="svc-tool">Workshop</span><span class="svc-tool">Data Literacy</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-card-num">05</span>
+        <h3>Dashboard Design & Strategy</h3>
+        <p>Not just building — designing. Monitoring vs. exploration dashboards. The right one for your actual need, not what was asked for.</p>
+        <div class="svc-tools"><span class="svc-tool">Power BI</span><span class="svc-tool">UX Thinking</span><span class="svc-tool">Storytelling</span></div>
+      </div>
+      <div class="svc-card" style="border-top:1px solid var(--accent);border-top-color:rgba(139,92,246,.4)">
+        <span class="svc-card-num">06 · new</span>
+        <h3>Vibe Coding with Claude</h3>
+        <p>I teach you how to build real products using Claude — no deep coding knowledge needed. Describe what you want, iterate fast, ship with confidence.</p>
+        <div class="svc-tools"><span class="svc-tool">Claude</span><span class="svc-tool">AI-assisted Dev</span><span class="svc-tool">Workshop</span><span class="svc-tool">Hands-on</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPABILITIES -->
+  <div id="capabilities" class="room fade">
+    <div class="room-header">
+      <div>
+        <div class="room-id">room · 02</div>
+        <div class="room-title">Capabilities</div>
+      </div>
+    </div>
+    <div class="cap-list">
+      <div class="cap-item">
+        <span class="cap-n">01</span>
+        <div><div class="cap-name">Microsoft Power BI</div><div class="cap-sub">Dashboard design, DAX, data modelling, report distribution</div></div>
+        <span class="cap-badge">expert</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">02</span>
+        <div><div class="cap-name">Python & SQL</div><div class="cap-sub">Building AI agent scripts with Python · querying and analysing databases with SQL</div></div>
+        <span class="cap-badge">advanced</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">04</span>
+        <div><div class="cap-name">Amazon Web Services</div><div class="cap-sub">EC2, S3, IAM, cloud architecture, cost management</div></div>
+        <span class="cap-badge">intermediate</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">05</span>
+        <div><div class="cap-name">Docker & Containerisation</div><div class="cap-sub">Container build, deployment, image management</div></div>
+        <span class="cap-badge">intermediate</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">06</span>
+        <div><div class="cap-name">Terraform & Ansible</div><div class="cap-sub">Infrastructure as Code, provisioning, configuration management</div></div>
+        <span class="cap-badge">intermediate</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">07</span>
+        <div><div class="cap-name">GitHub Actions (CI/CD)</div><div class="cap-sub">Automated pipelines, testing, deployment workflows</div></div>
+        <span class="cap-badge">intermediate</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">08</span>
+        <div><div class="cap-name">Cloudflare</div><div class="cap-sub">DNS management, SSL certificates, WAF security rules</div></div>
+        <span class="cap-badge">intermediate</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIBE CODING -->
+  <div id="vibe" class="room fade">
+    <div class="room-header">
+      <div>
+        <div class="room-id">room · 03</div>
+        <div class="room-title">Vibe Coding with Claude</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
+      <div>
+        <p style="font-family:var(--serif);font-size:1.05rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1.5rem">
+          <em style="font-style:italic;color:var(--cream)">Vibe coding</em> — a new way to build digital products using AI.
+          You describe what you want, Claude writes the code. You focus on the idea, not the syntax.
+        </p>
+        <p style="font-family:var(--serif);font-size:.92rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:2rem">
+          I teach from the ground up — how to prompt correctly, how to iterate, how to deploy.
+          Built for anyone with an idea but no coding background. Hands-on, practical, ship on the day.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div class="cap-item" style="border-top:1px solid var(--border)">
+            <span class="cap-n">01</span>
+            <div><div class="cap-name">What is Vibe Coding?</div><div class="cap-sub">The concept, how Claude works, and why it changes how we build products</div></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-n">02</span>
+            <div><div class="cap-name">Prompting Techniques</div><div class="cap-sub">How to describe your idea clearly so Claude's output is accurate and useful</div></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-n">03</span>
+            <div><div class="cap-name">Build a Real Project</div><div class="cap-sub">From idea → website/app → deployed. Live hands-on during the session</div></div>
+          </div>
+          <div class="cap-item">
+            <span class="cap-n">04</span>
+            <div><div class="cap-name">Deploy & Go Live</div><div class="cap-sub">Cloudflare Pages, domain setup, and how to maintain your project</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--border);padding-left:2.5rem">
+        <div class="sidebar-label">workshop details</div>
+        <div class="status-grid">
+          <div class="status-row"><span class="sk">mode</span><span class="sv">online / in-person</span></div>
+          <div class="status-row"><span class="sk">duration</span><span class="sv">half-day / full-day</span></div>
+          <div class="status-row"><span class="sk">level</span><span class="sv">beginner friendly</span></div>
+          <div class="status-row"><span class="sk">tools</span><span class="sv accent">Claude Code · Cloudflare</span></div>
+          <div class="status-row"><span class="sk">cert</span><span class="sv green">HRD Corp claimable</span></div>
+        </div>
+        <div style="margin-top:2rem">
+          <div class="sidebar-label">suitable for</div>
+          <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem">
+            <span class="svc-tool" style="font-size:.68rem;padding:.3rem .7rem">Entrepreneurs</span>
+            <span class="svc-tool" style="font-size:.68rem;padding:.3rem .7rem">Corporate Teams</span>
+            <span class="svc-tool" style="font-size:.68rem;padding:.3rem .7rem">Students</span>
+            <span class="svc-tool" style="font-size:.68rem;padding:.3rem .7rem">Freelancers</span>
+            <span class="svc-tool" style="font-size:.68rem;padding:.3rem .7rem">Non-tech Founders</span>
+            <span class="svc-tool" style="font-size:.68rem;padding:.3rem .7rem">Anyone with an idea</span>
+          </div>
+        </div>
+        <a href="#contact" style="display:inline-block;margin-top:2rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px">get in touch to book →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <div id="work" class="room fade">
+    <div class="room-header">
+      <div>
+        <div class="room-id">room · 04</div>
+        <div class="room-title">Work history</div>
+      </div>
+    </div>
+    <div class="work-list">
+      <div class="work-item">
+        <div class="work-meta-top">
+          <div><div class="work-role">Data Analyst</div><div class="work-co">ANALITIKA · Full-time</div></div>
+          <div class="work-period">May 2023 — Present · Cyberjaya, Remote</div>
+        </div>
+        <p class="work-desc">Executing sentiment analysis on social media platforms to extract public opinion for marketing strategy. Building Power BI dashboards and developing a social listening service.</p>
+        <div class="work-chips"><span class="chip">Power BI</span><span class="chip">Sentiment Analysis</span><span class="chip">AWS</span><span class="chip">Cloudflare</span><span class="chip">Social Listening</span></div>
+      </div>
+      <div class="work-item">
+        <div class="work-meta-top">
+          <div><div class="work-role">Data Analyst</div><div class="work-co">Priority Dynamics · Contract</div></div>
+          <div class="work-period">Sep 2022 — Apr 2023 · Malaysia</div>
+        </div>
+        <p class="work-desc">Data analysis, reporting and dashboard development to support business decision-making.</p>
+        <div class="work-chips"><span class="chip">Data Analysis</span><span class="chip">Reporting</span><span class="chip">Dashboards</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end rooms-wrap -->
+
+<!-- CONTACT -->
+<div class="section-divider"></div>
+<section id="contact">
+  <div class="contact-left fade">
+    <h2>The data is there.<br><em>Let's make it work</em><br>for you.</h2>
+    <p>Available for freelance projects, training programs, and full-time opportunities. Based in Malaysia, working remotely worldwide.</p>
+    <a href="https://www.linkedin.com/in/wannazirulhafiz/" target="_blank" class="contact-cta">connect on linkedin →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-label">about</div>
+      <p>This site belongs to Nazirul Hafiz, a Data Analyst based in Selangor, Malaysia. HRD Corp Accredited Trainer. Available for projects.</p>
+    </div>
+    <div class="footer-col">
+      <p style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">© 2026 · nazirulhafiz.dev</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+  document.querySelectorAll('#hero .fade').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 150 + i * 130);
+  });
+
+  // Nav smooth scroll with offset
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const id = link.getAttribute('href');
+      if (id === '#') return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const navH = document.querySelector('nav').offsetHeight;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH - 16;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
