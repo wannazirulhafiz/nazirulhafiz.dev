@@ -394,6 +394,8 @@
       .cap-badge{display:none;}
       #contact{padding:3rem 1.5rem;}
       footer .footer-inner{flex-direction:column;}
+      .vibe-grid{grid-template-columns:1fr !important;}
+      .vibe-sidebar{border-left:none !important;padding-left:0 !important;border-top:1px solid var(--border);padding-top:2rem;margin-top:1rem;}
     }
   </style>
 </head>
@@ -552,7 +554,7 @@
         <div class="room-title">Vibe Coding with Claude</div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
+    <div class="vibe-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start">
       <div>
         <p style="font-family:var(--serif);font-size:1.05rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1.5rem">
           <em style="font-style:italic;color:var(--cream)">Vibe coding</em> — a new way to build digital products using AI.
@@ -581,7 +583,7 @@
           </div>
         </div>
       </div>
-      <div style="border-left:1px solid var(--border);padding-left:2.5rem">
+      <div class="vibe-sidebar" style="border-left:1px solid var(--border);padding-left:2.5rem">
         <div class="sidebar-label">workshop details</div>
         <div class="status-grid">
           <div class="status-row"><span class="sk">mode</span><span class="sv">online / in-person</span></div>
